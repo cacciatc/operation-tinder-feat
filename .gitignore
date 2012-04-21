@@ -2,6 +2,9 @@
 bin-debug/
 bin-release/
 
+
+obj/
+
 # Project property files
 .actionScriptProperties
 .flexProperties
