@@ -2,6 +2,8 @@ package
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Spritemap;
+	import net.flashpunk.FP;
+	import net.flashpunk.Tween;
 	
 	/**
 	 * ...
@@ -17,6 +19,15 @@ package
 		{
 			super(x, y, sprite);
 			setHitbox(32, 32);
+			type = "Prisoner";
+		}
+		
+		override public function update():void
+		{
+			if (collide("Player", x, y))
+			{
+				//add fade in and out tween!
+			}
 		}
 		
 	}

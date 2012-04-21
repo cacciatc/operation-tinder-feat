@@ -25,9 +25,11 @@ package
 		
 		override public function update():void
 		{
-			if (collide("Water", x, y))
+			var water:Entity;
+			if ((water = collide("Water", x, y)))
 			{
 				morale -= 5;
+				FP.world.remove(water);			
 			}
 			
 			if (morale <= 0)

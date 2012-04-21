@@ -49,8 +49,8 @@ package
 			setHitbox(32, 32);
 			type = "Player";
 			v = new Point(0, 0);
-			morale = MAX_MORALE*0.90;
-			ammo = MAX_AMMO*0.90;
+			morale = MAX_MORALE;
+			ammo = MAX_AMMO;
 			pressure = 0;
 			pressureTimer = 0;
 			shooting = false;
