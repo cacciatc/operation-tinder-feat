@@ -18,16 +18,24 @@ package
 		[Embed(source = "../assets/player.png")] public static const PLAYER:Class;
 		
 		public const SPEED:uint = 100;
+		public const MAX_MORALE:uint = 100;
+		public const MAX_AMMO:uint = 100;
+		
 		
 		public var sprite:Spritemap = new Spritemap(PLAYER, GameStage.TILE_SIZE, GameStage.TILE_SIZE);
 		
 		public var v:Point;
+		public var morale:uint;
+		public var ammo:uint;
 		
 		public function Player(x:int, y:int) 
 		{
 			super(x, y, sprite);
 			setHitbox(32, 32);
+			type = "Player";
 			v = new Point(0, 0);
+			morale = MAX_MORALE;
+			ammo = MAX_AMMO;
 		}
 		
 		public function checkCollision():void
@@ -55,6 +63,17 @@ package
 					v.y = 0;
 					y = Math.floor(y/32)*32 + 32;
 				}
+			}
+			
+			var powerup:Entity;
+			if ((powerup = collide("Candy", x, y)) && morale < MAX_MORALE) {
+				morale += Candy(powerup).moraleBonus;
+				FP.world.remove(powerup);
+			}
+			
+			if ((powerup = collide("Refill", x, y)) && ammo < MAX_AMMO) {
+				ammo += Refill(powerup).ammoBonus;
+				FP.world.remove(powerup);
 			}
 		}
 		

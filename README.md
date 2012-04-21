@@ -36,7 +36,14 @@ fire hydrants
 electrical boxes
 
 todo
+----
+* guns
+* morale
+
+todo if time
 -----
-add housing collisions
-add house tiles basic
-add guns
+* add housing collisions
+* add house tiles basic
+* locks
+* keys
+* trees
