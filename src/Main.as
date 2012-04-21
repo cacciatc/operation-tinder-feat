@@ -11,10 +11,9 @@ package
 	{
 		public function Main()
 		{
-			super(800, 600, 60, false);
+			super(800, 1800, 60, false);
 			
-			//? FP.screen.scale = 2;
-			FP.world = new GameWorld();
+			FP.world = new GameStage();
 		}
 	}
 	
