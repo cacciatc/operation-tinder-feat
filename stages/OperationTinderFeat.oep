@@ -24,7 +24,10 @@
     <Height>600</Height>
   </CameraSize>
   <ExportCameraPosition>true</ExportCameraPosition>
-  <LevelValueDefinitions />
+  <LevelValueDefinitions>
+    <ValueDefinition xsi:type="IntValueDefinition" Name="camerax" Default="0" Min="0" Max="1000000" ShowSlider="false" />
+    <ValueDefinition xsi:type="IntValueDefinition" Name="cameray" Default="0" Min="0" Max="1000000" ShowSlider="false" />
+  </LevelValueDefinitions>
   <LayerDefinitions>
     <LayerDefinition xsi:type="GridLayerDefinition">
       <Name>Walls</Name>

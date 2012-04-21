@@ -53,9 +53,6 @@ package
 				tileThings.setTile(int(obj.@x), int(obj.@y), int(obj.@tx));
 			}
 			addGraphic(tileThings, 5);
-			
-			//FP.camera.x = int(stageData.camera.x);
-			//FP.camera.y = int(stageData.camera.y);
 
 			for each (obj in stageData.Objects.Player) {
 				add(player = new Player(int(obj.@x), int(obj.@y)));
@@ -89,17 +86,17 @@ package
 			for (var l:String in stageData.Objects.Lock) {
 				//add(new Lock(l.@x, l.@y));
 			}
+			
+			camera.x = int(stageData.@camerax);
+			camera.y = int(stageData.@cameray);
 		}
 		
-		/*override public function render():void {
-			var x:Number = camera.x;
-			var y:Number = camera.y;
-			camera.x = int(camera.x);
-			camera.y = int(camera.y);
-			super.render();
-			camera.x = x;
-			camera.y = y;
-		}*/
+		override public function update():void
+		{
+			super.update();
+			camera.x += (FP.clamp(player.x - FP.halfWidth, 0, width - FP.width) - camera.x) * 0.1;
+			camera.y += ((player.y - 300)- camera.y) * 0.1;
+		}
 		
 	}
 

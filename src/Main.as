@@ -11,7 +11,7 @@ package
 	{
 		public function Main()
 		{
-			super(800, 1800, 60, false);
+			super(800, 1800, 60, true);
 			
 			FP.world = new GameStage();
 		}

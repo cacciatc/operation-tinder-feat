@@ -34,3 +34,9 @@ cars
 mailboxes
 fire hydrants
 electrical boxes
+
+todo
+-----
+add housing collisions
+add house tiles basic
+add guns
