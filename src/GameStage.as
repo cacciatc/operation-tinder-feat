@@ -3,8 +3,13 @@ package
 	import flash.display.GraphicsGradientFill;
 	import flash.xml.XMLNode;
 	import net.flashpunk.FP;
+	import net.flashpunk.graphics.Text;
 	import net.flashpunk.graphics.Tilemap;
 	import net.flashpunk.masks.Grid;
+	import net.flashpunk.World;
+	import punk.ui.PunkLabel;
+	import punk.ui.PunkPanel;
+	import punk.ui.skins.RolpegeBlue;
 	
 	import org.flashdevelop.utils.FlashConnect;
 	
@@ -30,16 +35,12 @@ package
 		
 		public var player:Player;
 		
-		public static var totalPrisoners:int;
-		
 		public function GameStage(file:Class = null) 
 		{
 			// defaults to stage 1
 			if (file == null) {
 				file = STAGE_1;
 			}
-			
-			Stats.rescuedPrisoners = 0;
 			
 			stageFile = file;
 			stageData = FP.getXML(file);
@@ -68,9 +69,11 @@ package
 			}
 			
 			// add prisioners
+			Stats.totalPrisoners = 0;
+			Stats.rescuedPrisoners = 0;
 			for each (obj in stageData.Objects.Prisoner) {
 				add(new Prisoner(int(obj.@x), int(obj.@y)));
-				totalPrisoners += 1;
+				Stats.totalPrisoners += 1;
 			}
 			
 			// add refills
@@ -95,6 +98,8 @@ package
 			
 			camera.x = int(stageData.@camerax);
 			camera.y = int(stageData.@cameray);
+			
+			add(new TextBox(""));
 		}
 		
 		override public function update():void
@@ -103,8 +108,8 @@ package
 			camera.x += ((player.x - 200+16)-camera.x)*0.1;
 			camera.y += ((player.y - 150) - camera.y) * 0.1;
 			
-			if (Stats.rescuedPrisoners == totalPrisoners) {
-				FlashConnect.trace("you won!");
+			if (Stats.rescuedPrisoners == Stats.totalPrisoners) {
+				FP.world = new YouWon();
 			}
 			
 		}

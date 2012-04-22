@@ -42,6 +42,7 @@ package
 		public var shooting:Boolean;
 		
 		public var pressureTimer:Number;
+		public var moraleTimer:Number;
 		
 		public function Player(x:int, y:int) 
 		{
@@ -53,6 +54,7 @@ package
 			ammo = MAX_AMMO;
 			pressure = 0;
 			pressureTimer = 0;
+			moraleTimer = 0;
 			shooting = false;
 			facing = NORTH;
 		}
@@ -86,15 +88,25 @@ package
 			
 			var powerup:Entity;
 			if ((powerup = collide("Candy", x, y)) && morale < MAX_MORALE) {
-				morale += Candy(powerup).moraleBonus;
-				morale %= 101;
+				var temp1:int = morale;
+				temp1 += Candy(powerup).moraleBonus;
+				if (temp1 > 100)
+				{
+					temp1 = 100;
+				}
+				morale = temp1;
 				Candy(powerup).proc();
 				FP.world.remove(powerup);
 			}
 			
 			if ((powerup = collide("Refill", x, y)) && ammo < MAX_AMMO) {
-				ammo += Refill(powerup).ammoBonus;
-				ammo %= 101;
+				var temp2:int = ammo;
+				temp2 += Refill(powerup).ammoBonus;
+				if (temp2 > 100)
+				{
+					temp2 = 100;
+				}
+				ammo = temp2;
 				Refill(powerup).proc();
 				FP.world.remove(powerup);
 			}
@@ -102,8 +114,13 @@ package
 			var water:Entity;
 			if ((water = collide("Water", x, y)))
 			{
-				morale -= 2;
+				morale -= 20;
 				FP.world.remove(water);
+			}
+			
+			if (morale < 0)
+			{
+				FP.world = new YouLost();
 			}
 		}
 		
@@ -111,7 +128,7 @@ package
 		{
 			if (pressure < MAX_PRESSURE)
 			{
-				pressure += 1;
+				pressure += 2;
 				// make satisfying sound
 			}
 			else
@@ -130,8 +147,8 @@ package
 			else{*/
 				if (ammo > 0 && pressure > 0)// && !shooting)
 				{
-					pressure -= 2;
-					ammo -= 1;
+					pressure -= 4;
+					ammo -= 2;
 					
 					// which way are we facing?
 					var p:Point = new Point();
@@ -181,13 +198,33 @@ package
 			pressureTimer += FP.elapsed;
 
 			if (pressureTimer > 1) {
-				pressure -= 1;
+				pressure -= 2;
 				pressureTimer = 0;
+			}
+		}
+		
+		private function degradeMorale():void 
+		{
+			moraleTimer += FP.elapsed;
+
+			if (moraleTimer > 2) {
+				morale -= 1;
+				moraleTimer = 0;
 			}
 		}
 		
 		override public function update():void 
 		{
+			var t:TextBox;
+			t = TextBox(world.typeFirst("Text"));
+			if (t != null)
+			{
+				t.y = y - 130;
+				t.x = x - 170;
+				t.text.text = "Morale: " + morale + "\nWater: " + ammo + "\nPressure: " + pressure + "\nPrisoners: " + Stats.rescuedPrisoners + "/" + Stats.totalPrisoners;
+				world.remove(t);
+				world.add(t);
+			}
 			checkCollision();
 			v.x = 0;
 			v.y = 0;
@@ -221,6 +258,7 @@ package
 			}
 			
 			degradePressure();
+			degradeMorale();
 			
 			//if (shooting) {
 				//pressure -= 1;

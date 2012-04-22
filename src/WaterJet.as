@@ -21,7 +21,7 @@ package
 		{
 			v = new Point(dx, dy);
 			super(x, y,sprite);
-			setHitbox(5, 5);
+			setHitbox(16, 16);
 			type = "Water";
 			timer = 0;
 		}
@@ -32,7 +32,7 @@ package
 			y += v.y * FP.elapsed;
 			
 			timer += FP.elapsed;
-			if (timer > 5)
+			if (timer > 4)
 			{
 				FP.world.remove(this);
 			}

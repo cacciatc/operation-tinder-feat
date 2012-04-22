@@ -23,7 +23,7 @@ package
 			super(x, y, sprite);
 			setHitbox(32, 32);
 			type = "Refill";
-			ammoBonus = 15;
+			ammoBonus = 25;
 		}
 		
 		public function proc():void

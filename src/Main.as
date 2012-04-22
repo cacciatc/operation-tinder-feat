@@ -13,7 +13,8 @@ package
 		{
 			super(800, 1800, 60, true);
 			FP.screen.scale = 2;
-			FP.world = new GameStage();
+			FP.world = new Instructions();
+			//FP.world = new GameStage();
 		}
 	}
 	
