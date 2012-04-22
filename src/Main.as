@@ -12,7 +12,7 @@ package
 		public function Main()
 		{
 			super(800, 1800, 60, true);
-			FP.screen.scale = 1;
+			FP.screen.scale = 2;
 			FP.world = new GameStage();
 		}
 	}

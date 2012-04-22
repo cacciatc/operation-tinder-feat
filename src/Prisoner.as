@@ -3,7 +3,9 @@ package
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.FP;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.Tween;
+	import Stats;
 	
 	/**
 	 * ...
@@ -13,7 +15,9 @@ package
 	{
 		
 		[Embed(source = "../assets/prisoner.png")] public static const PRISONER:Class;
+		[Embed(source = "../assets/rescue.mp3")] public static const RESCUE:Class;
 		
+		public var sound:Sfx = new Sfx(RESCUE);
 		public var sprite:Spritemap = new Spritemap(PRISONER, GameStage.TILE_SIZE, GameStage.TILE_SIZE);
 		public function Prisoner(x:int, y:int) 
 		{
@@ -26,7 +30,9 @@ package
 		{
 			if (collide("Player", x, y))
 			{
-				//add fade in and out tween!
+				Stats.rescuedPrisoners += 1;
+				sound.play();
+				FP.world.remove(this);
 			}
 		}
 		
